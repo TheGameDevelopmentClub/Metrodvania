@@ -6,6 +6,7 @@ public class foeScript : MonoBehaviour {
 	public float speed = 1f;
 	public float wallLeft = 0.0f;
 	public float wallRight = 5.0f;
+	public float health = 3;
 
 	private float side = 1.0f;
 	private float walkAmount;
@@ -31,5 +32,9 @@ public class foeScript : MonoBehaviour {
 		rigidbody2D.velocity = new Vector2 (walkAmount, rigidbody2D.velocity.y);
 		transform.localScale = new Vector3 (side, 1, 1);
 		//transform.Translate(walkAmount);
+	}
+
+	void OnHit(){
+		health--;
 	}
 }

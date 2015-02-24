@@ -21,7 +21,10 @@ public class playerScript : MonoBehaviour {
 	public float speedMultiplier = 2f;
 	private float speed; 
 
-
+	//comabt variables
+	private float damageTimer = 2f;
+	public float damageWait = 2f;
+	public float health = 10f;
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +43,10 @@ public class playerScript : MonoBehaviour {
 				Application.LoadLevel(Application.loadedLevel);
 
 			return;
+		}
+
+		if (damageTimer < damageWait) {
+			damageTimer += Time.deltaTime;
 		}
 
 		speed = Input.GetKey (KeyCode.RightShift)? initialSpeed * speedMultiplier : initialSpeed;
@@ -88,13 +95,28 @@ public class playerScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-
-		if (other.tag == "deadly") {
-			anim.SetBool("Dies", true);
-			rigidbody2D.AddForce(new Vector2(0,500));
-			isDead = true;
+		if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait) {
+			OnHit();
+			damageTimer = 0f;
 		
 		}
 
-	} 
+	}
+
+	void OnTriggerStay2D(Collider2D other){
+		if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait) {
+			OnHit();
+			damageTimer = 0f;
+			
+		}
+	}
+
+	void OnHit(){
+		health--;
+		if (health == 0f) {
+			anim.SetBool("Dies", true);
+			rigidbody2D.AddForce(new Vector2(0,500));
+			isDead = true;
+		}
+	}
 }
