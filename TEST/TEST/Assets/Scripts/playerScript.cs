@@ -25,6 +25,10 @@ public class playerScript : MonoBehaviour {
 	private float damageTimer = 2f;
 	public float damageWait = 2f;
 	public float health = 10f;
+	public float damage = 10f;
+	public bool attacking = false;
+	private float attackTimer = 2f;
+	private float attackTime = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -51,6 +55,13 @@ public class playerScript : MonoBehaviour {
 			anim.SetBool("DamageTaken", false);
 		}
 
+		if (attackTimer < attackTime) {
+			attackTimer += Time.deltaTime;
+		} else if (attacking) {
+			anim.SetBool("Attacking", false);
+			attacking = false;
+		}
+
 		speed = Input.GetKey (KeyCode.RightShift)? initialSpeed * speedMultiplier : initialSpeed;
 
 		anim.SetBool ("Grounded", grounded);
@@ -62,13 +73,16 @@ public class playerScript : MonoBehaviour {
 			anim.SetBool ("Run", false);
 		}
 
-
-		if (Input.GetKey (KeyCode.A)) {
+		if (Input.GetMouseButtonDown(0)) {
+			anim.SetBool("Attacking", true);
+			attacking = true;
+			attackTimer = 0f;
+		} else if (Input.GetKey (KeyCode.A) && !attacking) {
 			anim.SetBool("Moving", true);
 			rigidbody2D.velocity = new Vector2 (-speed, rigidbody2D.velocity.y);
 			transform.localScale = new Vector3 (-1, 1, 1);
 
-		} else if (Input.GetKey (KeyCode.D)) {
+		} else if (Input.GetKey (KeyCode.D) && !attacking) {
 			anim.SetBool("Moving", true);
 			rigidbody2D.velocity = new Vector2 (speed, rigidbody2D.velocity.y);
 			transform.localScale = new Vector3 (1, 1, 1);
@@ -97,19 +111,21 @@ public class playerScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait) {
+		if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait && !attacking) {
 			OnHit();
 			damageTimer = 0f;
-		
+		} else if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait) {
+			Attack(other);	
 		}
 
 	}
 
 	void OnTriggerStay2D(Collider2D other){
-		if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait) {
+		if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait && !attacking) {
 			OnHit();
-			damageTimer = 0f;
-			
+			damageTimer = 0f;		
+		} else if (other.tag == "deadly" && health > 0 && damageTimer >= damageWait) {
+			Attack(other);	
 		}
 	}
 
@@ -122,5 +138,9 @@ public class playerScript : MonoBehaviour {
 		} else {
 			anim.SetBool ("DamageTaken", true);
 		}
+	}
+
+	void Attack(Collider2D other){
+		//other.gameObject.OnHit ();
 	}
 }
