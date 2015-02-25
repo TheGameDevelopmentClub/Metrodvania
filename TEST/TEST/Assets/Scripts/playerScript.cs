@@ -47,6 +47,8 @@ public class playerScript : MonoBehaviour {
 
 		if (damageTimer < damageWait) {
 			damageTimer += Time.deltaTime;
+		}else if (anim.GetBool("DamageTaken")) {
+			anim.SetBool("DamageTaken", false);
 		}
 
 		speed = Input.GetKey (KeyCode.RightShift)? initialSpeed * speedMultiplier : initialSpeed;
@@ -114,9 +116,11 @@ public class playerScript : MonoBehaviour {
 	void OnHit(){
 		health--;
 		if (health == 0f) {
-			anim.SetBool("Dies", true);
-			rigidbody2D.AddForce(new Vector2(0,500));
+			anim.SetBool ("Dies", true);
+			rigidbody2D.AddForce (new Vector2 (0, 500));
 			isDead = true;
+		} else {
+			anim.SetBool ("DamageTaken", true);
 		}
 	}
 }
