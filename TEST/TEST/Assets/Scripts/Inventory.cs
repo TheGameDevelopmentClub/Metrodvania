@@ -33,8 +33,8 @@ public class Inventory : MonoBehaviour {
 	{
 		for(int i = 0; i < inventory.Count; i++)
 		{
-			GUI.Label(new Rect(20+(70)*i, 20, 200, 50), inventory[i].icon);
-			if (selected == i) GUI.Label(new Rect(20+(70*i), 20, 200, 50), selector);
+			GUI.Label(new Rect(20+(70)*i, 50, 200, 50), inventory[i].icon);
+			if (selected == i) GUI.Label(new Rect(20+(70*i), 50, 200, 50), selector);
 		}
 	}
 }
