@@ -1,11 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Inventory.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\CastleCrossing_Prototype\Proto\Assets\Scripts\Triggers\PlayerTrigger.cs">
     <Files>
-      <File FileName="Assets\Scripts\Inventory.cs" Line="7" Column="18" />
       <File FileName="..\..\..\CastleCrossing_Prototype\Proto\Assets\Scripts\Triggers\PumpkinTrigger.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ItemDatabase.cs" Line="7" Column="14" />
-      <File FileName="Assets\Scripts\Item.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\CastleCrossing_Prototype\Proto\Assets\Scripts\Triggers\PlayerTrigger.cs" Line="19" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
