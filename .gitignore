@@ -1,29 +1,32 @@
-TEST/TEST/Library/metadata/00/00000000000000003000000000000000
-TEST/TEST/Library/metadata/00/00000000000000004100000000000000
-TEST/TEST/Library/metadata/00/00000000000000005100000000000000
-TEST/TEST/Library/metadata/00/00000000000000007000000000000000
-TEST/TEST/Library/metadata/00/00000000000000009000000000000000
-TEST/TEST/Library/metadata/00/0000000000000000c000000000000000
-TEST/TEST/Library/metadata/29/29c14f4ba64a391498ea3eedaf584765
-TEST/TEST/Library/metadata/2b/2b8d0fcf7ad94344eb1137e7a16334cb
-TEST/TEST/Library/metadata/3e/3e2c4300b77ecca4fa5ba5495ed358a2
-TEST/TEST/Library/metadata/42/420aa7077f99f214eadb7a5c1a0f00ca
-TEST/TEST/Library/metadata/80/80a3616ca19596e4da0f10f14d241e9f
-TEST/TEST/Library/metadata/91/9175d913679f50d4aba8cb0bcc29c88d
-TEST/TEST/Library/metadata/b0/b09adf985078581408d18b1840ab0833
-TEST/TEST/Library/metadata/f5/f5f67c52d1564df4a8936ccd202a3bd8
-TEST/TEST/Library/metadata/ff/ff34c9bf84334e14bab89ce148221ae0
-TEST/TEST/Library/metadata/00/00000000000000004000000000000000
-TEST/TEST/Library/metadata/00/00000000000000005000000000000000
-TEST/TEST/Library/metadata/00/00000000000000005100000000000000
-TEST/TEST/Library/metadata/00/00000000000000006100000000000000
-TEST/TEST/Library/metadata/00/00000000000000008000000000000000
-TEST/TEST/Library/metadata/00/00000000000000009000000000000000
-TEST/TEST/Library/metadata/00/0000000000000000b000000000000000
-TEST/TEST/Library/metadata/00/0000000000000000c000000000000000
-TEST/TEST/Library/metadata/36/363483813f73abf49bc6d0127ad965b7
-TEST/TEST/Library/metadata/5b/5b1e64ed20c50e241a02ceefb5de861f
-TEST/TEST/Library/ScriptAssemblies/Assembly-CSharp.dll
-TEST/TEST/Library/ScriptAssemblies/Assembly-CSharp.dll.mdb
-TEST/TEST/Library/ScriptMapper
-TEST/TEST/Temp/UnityLockfile
+# =============== #
+# Unity generated #
+# =============== #
+[Tt]emp/
+[Oo]bj/
+[Bb]uild
+[Ll]ibrary/
+sysinfo.txt
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+[Ee]xported[Oo]bj/
+/*.userprefs
+/*.csproj
+/*.pidb
+/*.suo
+/*.sln*
+/*.user
+/*.unityproj
+/*.booproj
+ 
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
