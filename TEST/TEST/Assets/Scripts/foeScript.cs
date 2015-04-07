@@ -3,38 +3,60 @@ using System.Collections;
 
 public class foeScript : MonoBehaviour {
 
-	public float speed = 1f;
-	public float wallLeft = 0.0f;
-	public float wallRight = 5.0f;
-	public float health = 3;
+	Animator anim;
+	public playerScript player;
+	bool dead;
 
+	float timer;
+	public float maxTimer = 2.5f;
+	public float speed = 1f;
 	private float side = 1.0f;
 	private float walkAmount;
 
 	// Use this for initialization
 	void Start () {
-	
+		anim = GetComponent <Animator>();
+		dead = false;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		walkAmount = side * speed;
+		//When dead
+		if (dead) {
 
-		if (side > 0.0f && transform.position.x > wallRight) {
-			side = -1.0f;
-
-		} else if (side <= 0.0f && transform.position.x < wallLeft) {
-			side = 1.0f;
-
+			//rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
+			return;
 		}
+
+		anim.SetBool("Moving", true);
+		walkAmount = side * speed;
+		timer += Time.deltaTime;
+
+		if (timer > maxTimer) {
+			side = side * -1.0f;
+			timer = 0;
+
+		} 
 
 		rigidbody2D.velocity = new Vector2 (walkAmount, rigidbody2D.velocity.y);
 		transform.localScale = new Vector3 (side, 1, 1);
-		//transform.Translate(walkAmount);
 	}
 
-	void OnHit(){
-		health--;
+	void OnTriggerEnter2D(Collider2D other) {
+		
+		if (other.tag == "player" && player.punch) {
+
+            dead = true;
+			anim.SetBool("Dead", true);
+			anim.SetBool("Moving", false);
+            rigidbody2D.velocity = new Vector2(0, 0);
+			rigidbody2D.AddForce(new Vector2(100, 50));
+			Destroy(this.gameObject, 1f);
+			gameObject.tag = "neutralized";
+		}
 	}
+
+
 }
