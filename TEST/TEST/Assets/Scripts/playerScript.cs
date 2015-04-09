@@ -56,10 +56,10 @@ public class playerScript : MonoBehaviour
         {
             damageTimer += Time.deltaTime;
         }
-        else if (anim.GetBool("DamageTaken"))
-        {
-            anim.SetBool("DamageTaken", false);
-        }
+        //else if (anim.GetBool("DamageTaken"))
+        //{
+            //anim.SetBool("DamageTaken", false);
+        //}
 
 		//Sprint
 		speed = Input.GetKey(KeyCode.LeftShift)? initialSpeed*runMultiplier : initialSpeed;
@@ -135,7 +135,14 @@ public class playerScript : MonoBehaviour
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		
+
+		//If hit death wall
+		if (other.tag == "deathwall" && !dead) 
+		{
+			health = 0;
+			OnHit();
+		}
+
         //if hit by enemy
         if (other.tag == "deadly" && !dead && !punch && damageTimer >= damageWait)
         {
@@ -145,7 +152,7 @@ public class playerScript : MonoBehaviour
 
         //if Hit by projectile
         else if (other.tag == "projectile" && !dead && damageTimer >= damageWait) {
-            health--;
+            health -= 2;
             OnHit();
             anim.SetBool("Punch", false);
         }
@@ -161,7 +168,7 @@ public class playerScript : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other) {
 
-        if ((other.tag == "box" || other.tag == "turret") && rigidbody2D.velocity.y == 0 && !dead)
+        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
         {
             canRun = false;
             anim.SetBool("Push", true);           
@@ -185,7 +192,7 @@ public class playerScript : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other) {
 
-        if ((other.tag == "box" || other.tag == "turret") && rigidbody2D.velocity.y == 0 && !dead)
+        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
         {
             canRun = true;
             anim.SetBool("Push", false);        

@@ -8,15 +8,14 @@ using System.Text;
 
 using UnityEngine;
 using UnityEditor;
-using Tiled2Unity;
 
-[CustomEditor(typeof(Tiled2Unity.SortingLayerExposed))]
-public class SortingLayerExposedEditor : UnityEditor.Editor
+[CustomEditor(typeof(SortingLayerExposed))]
+public class SortingLayerExposedEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         // Get the renderer from the target object
-        var renderer = (target as SortingLayerExposed).gameObject.GetComponent<Renderer>();
+        var renderer = (target as SortingLayerExposed).gameObject.renderer;
 
         // If there is no renderer, we can't do anything
         if (!renderer)

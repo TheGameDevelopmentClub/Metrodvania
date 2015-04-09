@@ -74,11 +74,7 @@ public class harpyScript : MonoBehaviour {
 	
 	}
 
-    void OnTriggerEnter2D(Collider2D other) {
-
-        if (other.tag != "player") {
-
-            Destroy(this.gameObject);
-        }
+    void OnTriggerEnter2D() {
+		Destroy(this.gameObject);
     }
 }

@@ -15,7 +15,7 @@ namespace Tiled2Unity
     // Concentrates on the Xml file being imported
     partial class ImportTiled2Unity
     {
-        public static readonly string ThisVersion = "0.9.9.4";
+        public static readonly string ThisVersion = "0.9.3.0";
 
         public void XmlImported(string xmlPath)
         {
@@ -117,7 +117,7 @@ namespace Tiled2Unity
                 // Save and import the asset
                 string pathToMesh = "Assets/Tiled2Unity/Meshes/" + name;
                 ImportUtils.ReadyToWrite(pathToMesh);
-                File.WriteAllText(pathToMesh, raw, Encoding.UTF8);
+                File.WriteAllText(pathToMesh, raw);
                 AssetDatabase.ImportAsset(pathToMesh, ImportAssetOptions.ForceSynchronousImport);
             }
         }
