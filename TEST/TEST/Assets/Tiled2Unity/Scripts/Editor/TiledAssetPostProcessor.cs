@@ -2,7 +2,6 @@
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
-using System;
 
 using UnityEditor;
 using UnityEngine;
@@ -111,9 +110,6 @@ namespace Tiled2Unity
 
         private void OnPostprocessModel(GameObject gameObject)
         {
-            if (!UseThisImporter())
-                return;
-
             // Each mesh renderer has the ability to set the a sort layer but it takes some work with Unity to expose it.
             foreach (MeshRenderer mr in gameObject.GetComponentsInChildren<MeshRenderer>())
             {
@@ -121,19 +117,12 @@ namespace Tiled2Unity
 
                 // Also, no shadows
                 mr.receiveShadows = false;
-#if UNITY_5_0
-                mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-#else
                 mr.castShadows = false;
-#endif
             }
         }
 
         private Material OnAssignMaterialModel(Material defaultMaterial, Renderer renderer)
         {
-            if (!UseThisImporter())
-                return null;
-
             // This is the only reliable place to assign materials in the import chain.
             // It kind of sucks because we have to go about making the mesh/material association in a roundabout way.
 
@@ -156,31 +145,12 @@ namespace Tiled2Unity
         {
             if (!UseThisImporter())
                 return;
-
-            if (!string.IsNullOrEmpty(this.assetImporter.userData))
-            {
-                // The texture has already been exported and we don't want to reset the texture import settings
-                // This allows users to change their texture settings and have those changes stick.
-                return;
-            }
-
-            // Put some dummy UserData on the importer so we know not to apply these settings again.
-            this.assetImporter.userData = "tiled2unity";
-
             TextureImporter textureImporter = this.assetImporter as TextureImporter;
-            textureImporter.textureType = TextureImporterType.Advanced;
-            textureImporter.npotScale = TextureImporterNPOTScale.None;
             textureImporter.convertToNormalmap = false;
-            textureImporter.lightmap = false;
-            textureImporter.alphaIsTransparency = true;
-            textureImporter.grayscaleToAlpha = false;
-            textureImporter.linearTexture = false;
-            textureImporter.spriteImportMode = SpriteImportMode.None;
-            textureImporter.mipmapEnabled = false;
-            textureImporter.generateCubemap = TextureImporterGenerateCubemap.None;
             textureImporter.filterMode = FilterMode.Point;
-            textureImporter.wrapMode = TextureWrapMode.Clamp;
             textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+            textureImporter.mipmapEnabled = false;
+            textureImporter.textureType = TextureImporterType.GUI;
         }
 
     }

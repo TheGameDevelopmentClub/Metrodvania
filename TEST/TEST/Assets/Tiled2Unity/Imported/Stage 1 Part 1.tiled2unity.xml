@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!--Tiled2Unity generated xml data-->
 <!--Do not modify by hand-->
-<!--Last exported: 4/1/2015 6:47:01 PM-->
+<!--Last exported: 4/8/2015 7:55:04 PM-->
 <Tiled2Unity version="0.9.9.4">
   <AssignMaterial mesh="mesh_[00]_[00]" material="Ground" sortingLayerName="" sortingOrder="0" />
   <Prefab name="Stage 1 Part 1" numTilesWide="72" numTilesHigh="24" tileWidth="64" tileHeight="64" exportScale="1">
@@ -155,6 +155,12 @@
         <EdgeCollider2D>
           <Points>1984,-1408 1984,-1472 2021,-1464 2041,-1449 2048,-1432 2047,-1408 1984,-1407 1920,-1408 1920,-1435 1929,-1452 1948,-1465 1983,-1472 1983,-1407</Points>
         </EdgeCollider2D>
+      </GameObject>
+    </GameObject>
+    <GameObject name="Enemies">
+      <Property name="spawn" value="WalkingEnemy" />
+      <GameObject name="TileObject" x="2018" y="-282" rotation="0">
+        <Property name="spawn" value="WalkingEnemy" />
       </GameObject>
     </GameObject>
   </Prefab>
