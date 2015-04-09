@@ -151,14 +151,15 @@ public class playerScript : MonoBehaviour
 		}
 
         //if Hit by projectile
-        else if (other.tag == "projectile" && !dead && damageTimer >= damageWait) {
+        if (other.tag == "projectile" && !dead && damageTimer >= damageWait) {
             health -= 2;
             OnHit();
             anim.SetBool("Punch", false);
         }
 
-        else if (other.tag == "healthPotion") {
-
+		//If hit health potion
+        if (other.tag == "healthPotion") {
+			Destroy(other.gameObject);
             health += 5f;
             if (health > 10f) {
                 health = 10f;

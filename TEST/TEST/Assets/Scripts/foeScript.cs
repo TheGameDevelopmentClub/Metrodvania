@@ -58,5 +58,18 @@ public class foeScript : MonoBehaviour {
 		}
 	}
 
-
+	void OnTriggerStay2D(Collider2D other) {
+		
+		if (other.tag == "player" && player.punch) {
+			
+			dead = true;
+			anim.SetBool("Dead", true);
+			anim.SetBool("Moving", false);
+			rigidbody2D.velocity = new Vector2(0, 0);
+			rigidbody2D.AddForce(new Vector2(100, 50));
+			Destroy(this.gameObject, 1f);
+			gameObject.tag = "neutralized";
+		}
+	}
+	
 }

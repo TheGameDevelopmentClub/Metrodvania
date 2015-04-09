@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//DONT USE THIS, IT DESTROYS THE PICKUP BEFORE RESTORING HEALTH
 public class collectibles : MonoBehaviour {
 
 	// Use this for initialization
@@ -18,7 +19,6 @@ public class collectibles : MonoBehaviour {
 		if (other.tag == "player") {
 
 			Destroy(gameObject);
-
 			//Add player life
 		}
 	}
