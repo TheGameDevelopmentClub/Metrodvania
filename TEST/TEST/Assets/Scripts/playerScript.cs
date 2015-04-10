@@ -56,6 +56,17 @@ public class playerScript : MonoBehaviour
         {
             damageTimer += Time.deltaTime;
         }
+        
+        //damage blinking
+        if (damageTimer <= (damageWait/4)) this.renderer.enabled = false;
+        if (damageTimer > (damageWait / 4) && damageTimer <= (damageWait / 2)) this.renderer.enabled = true;
+        if (damageTimer > (damageWait/ 2) && damageTimer < (damageWait * 3 / 4)) this.renderer.enabled = false;
+        if (damageTimer >= (damageWait / 4)) this.renderer.enabled = true;           
+
+
+        
+
+
         //else if (anim.GetBool("DamageTaken"))
         //{
             //anim.SetBool("DamageTaken", false);

@@ -25,7 +25,8 @@ public class harpyScript : MonoBehaviour {
 	void Update () {
 
         //Check position of player
-        if (player.transform.position.x > (transform.position.x - 2.5f) && player.transform.position.x < (transform.position.x + 2.5f)) {
+        if (Vector2.Distance(transform.position, player.transform.position) < 7f)
+        {
 
             playerNear = true;
 
@@ -36,7 +37,7 @@ public class harpyScript : MonoBehaviour {
         }
 
         //Iddle moving
-        if (!playerNear)
+        if (!playerNear && !fix)
         {
 
             //Up - Down
@@ -61,14 +62,26 @@ public class harpyScript : MonoBehaviour {
         }
         else {
 
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, attSpeed * Time.deltaTime);
-
-            if (Vector2.Distance(transform.position, player.transform.position) > 1f && !fix)
+            if (!fix)
             {
-                fix = true;
-                playerPos = player.transform.position;
+
+                if (Vector2.Distance(transform.position, player.transform.position) < 1f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, player.transform.position, attSpeed * Time.deltaTime);
+                    playerPos = player.transform.position;
+                    fix = true;
+                }
+                else
+                {
+
+                    transform.position = Vector3.MoveTowards(transform.position, player.transform.position, attSpeed * Time.deltaTime);
+                }
+            }
+            else
+            {
+
                 transform.position = Vector3.MoveTowards(transform.position, playerPos, attSpeed * Time.deltaTime);
-            }                 
+            }         
             
         }
 	
