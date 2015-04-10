@@ -41,7 +41,7 @@ public class foeScript : MonoBehaviour {
 		} 
 
 		rigidbody2D.velocity = new Vector2 (walkAmount, rigidbody2D.velocity.y);
-		transform.localScale = new Vector3 (side, 1, 1);
+		transform.localScale = new Vector3 ((side * 79.46378f), 82.75964f, 1);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

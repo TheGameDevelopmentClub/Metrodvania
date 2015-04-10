@@ -6,6 +6,7 @@ public class turretScript : MonoBehaviour {
     public GameObject turretProjectile;
     public float speed;
     public float delay;
+	public int side;
 
 	// Use this for initialization
 	void Start () {
@@ -24,7 +25,7 @@ public class turretScript : MonoBehaviour {
 
             yield return new WaitForSeconds(delay);
             GameObject clone = (GameObject) Instantiate(turretProjectile, transform.position, Quaternion.identity);
-            clone.rigidbody2D.velocity = -transform.right * speed;
+            clone.rigidbody2D.velocity = (side * transform.right) * speed;
         }
     }
 }
