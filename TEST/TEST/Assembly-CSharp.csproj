@@ -46,22 +46,22 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\SCRIPTS\Health.cs" />
-     <Compile Include="Assets\SCRIPTS\Inventory.cs" />
-     <Compile Include="Assets\SCRIPTS\Item.cs" />
-     <Compile Include="Assets\SCRIPTS\ItemDatabase.cs" />
-     <Compile Include="Assets\SCRIPTS\collectibles.cs" />
-     <Compile Include="Assets\SCRIPTS\foeScript.cs" />
-     <Compile Include="Assets\SCRIPTS\harpyScript.cs" />
-     <Compile Include="Assets\SCRIPTS\movingGrass.cs" />
-     <Compile Include="Assets\SCRIPTS\particleDestry.cs" />
-     <Compile Include="Assets\SCRIPTS\playerScript.cs" />
-     <Compile Include="Assets\SCRIPTS\runParticles.cs" />
-     <Compile Include="Assets\SCRIPTS\sprits.cs" />
-     <Compile Include="Assets\SCRIPTS\switchScript.cs" />
-     <Compile Include="Assets\SCRIPTS\switchTPScript.cs" />
-     <Compile Include="Assets\SCRIPTS\turretProjectile.cs" />
-     <Compile Include="Assets\SCRIPTS\turretScript.cs" />
+     <Compile Include="Assets\Scripts\Health.cs" />
+     <Compile Include="Assets\Scripts\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Item.cs" />
+     <Compile Include="Assets\Scripts\ItemDatabase.cs" />
+     <Compile Include="Assets\Scripts\collectibles.cs" />
+     <Compile Include="Assets\Scripts\foeScript.cs" />
+     <Compile Include="Assets\Scripts\harpyScript.cs" />
+     <Compile Include="Assets\Scripts\movingGrass.cs" />
+     <Compile Include="Assets\Scripts\particleDestry.cs" />
+     <Compile Include="Assets\Scripts\playerScript.cs" />
+     <Compile Include="Assets\Scripts\runParticles.cs" />
+     <Compile Include="Assets\Scripts\sprits.cs" />
+     <Compile Include="Assets\Scripts\switchScript.cs" />
+     <Compile Include="Assets\Scripts\switchTPScript.cs" />
+     <Compile Include="Assets\Scripts\turretProjectile.cs" />
+     <Compile Include="Assets\Scripts\turretScript.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TileAnimator.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TiledMap.cs" />

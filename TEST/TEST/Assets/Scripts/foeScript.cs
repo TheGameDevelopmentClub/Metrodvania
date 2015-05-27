@@ -6,6 +6,7 @@ public class foeScript : MonoBehaviour {
 	Animator anim;
 	public playerScript player;
 	bool dead;
+    public GameObject pl;
 
 	float timer;
 	public float maxTimer = 2.5f;
@@ -66,7 +67,15 @@ public class foeScript : MonoBehaviour {
 			anim.SetBool("Dead", true);
 			anim.SetBool("Moving", false);
 			rigidbody2D.velocity = new Vector2(0, 0);
-			rigidbody2D.AddForce(new Vector2(100, 50));
+
+            if (pl.transform.position.x - this.transform.position.x <= 0)
+            {
+                rigidbody2D.AddForce(new Vector2(100, 50));
+            }
+            else
+            {
+                rigidbody2D.AddForce(new Vector2(-100, 50));
+            }
 			Destroy(this.gameObject, 1f);
 			gameObject.tag = "neutralized";
 		}

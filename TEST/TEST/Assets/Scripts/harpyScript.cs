@@ -13,7 +13,7 @@ public class harpyScript : MonoBehaviour {
     private float side = -1f;
     public float attSpeed = 3f;
 
-    private bool fix = false;
+    public bool fix = false;
     private Vector2 playerPos;
 
 	// Use this for initialization
@@ -60,7 +60,7 @@ public class harpyScript : MonoBehaviour {
             transform.localScale = new Vector3(-side, 1, 1);
 
         }
-        else {
+        if (playerNear || fix) {
 
             if (!fix)
             {
@@ -90,4 +90,6 @@ public class harpyScript : MonoBehaviour {
     void OnTriggerEnter2D() {
 		Destroy(this.gameObject);
     }
+
+    
 }

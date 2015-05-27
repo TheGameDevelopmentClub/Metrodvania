@@ -216,7 +216,6 @@ public class playerScript : MonoBehaviour
         damageTimer = 0f;
         if (health <= 0f)
         {
-            anim.SetBool("Dies", true);
             anim.SetBool("Run", false);
             anim.SetBool("Moving", false);
             anim.SetBool("Death", true);
