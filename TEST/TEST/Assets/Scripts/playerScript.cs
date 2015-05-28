@@ -200,6 +200,11 @@ public class playerScript : MonoBehaviour
             OnHit();
             anim.SetBool("Punch", false);
         }
+
+        //If player is on a moving platform
+        if (other.tag == "movePlat") {
+            this.rigidbody2D.velocity = new Vector2(other.rigidbody2D.velocity.x, this.rigidbody2D.velocity.y);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other) {

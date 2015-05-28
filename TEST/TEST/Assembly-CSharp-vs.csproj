@@ -53,11 +53,12 @@
      <Compile Include="Assets\Scripts\collectibles.cs" />
      <Compile Include="Assets\Scripts\foeScript.cs" />
      <Compile Include="Assets\Scripts\harpyScript.cs" />
-     <Compile Include="Assets\Scripts\movingGrass.cs" />
+     <Compile Include="Assets\Scripts\movingPlat.cs" />
      <Compile Include="Assets\Scripts\particleDestry.cs" />
      <Compile Include="Assets\Scripts\playerScript.cs" />
      <Compile Include="Assets\Scripts\runParticles.cs" />
      <Compile Include="Assets\Scripts\sprits.cs" />
+     <Compile Include="Assets\Scripts\switchMovingPlat.cs" />
      <Compile Include="Assets\Scripts\switchScript.cs" />
      <Compile Include="Assets\Scripts\switchTPScript.cs" />
      <Compile Include="Assets\Scripts\turretProjectile.cs" />

@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class switchScript : MonoBehaviour {
+public class switchMovingPlat : MonoBehaviour {
 
 	Animator anim;
-	public GameObject obj;
-	private Vector3 pos;
+	public movingPlat obj;
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent <Animator>();
-		pos = obj.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -18,14 +16,11 @@ public class switchScript : MonoBehaviour {
 	
 	}
 
-	void OnTriggerEnter2D() {
-		obj.transform.position = pos;
-	}
 
 	void OnTriggerStay2D() {
 
 		anim.SetBool("Down", true);
-		//move.Toggle(true); 
+        obj.Toggle(); 
 	}
 
 	void OnTriggerExit2D() {
