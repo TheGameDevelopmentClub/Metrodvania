@@ -21,6 +21,7 @@ public class playerScript : MonoBehaviour
     public float health = 10f;
     private float damageTimer = 2f;
     private float damageWait = 2f;
+    public GameObject punchArea;
 
 	//Speed Variables
 	float speed = 2f;
@@ -35,6 +36,8 @@ public class playerScript : MonoBehaviour
 		anim = GetComponent <Animator> ();
 		dead = false;
         health = 10f;
+        punchArea.gameObject.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -82,6 +85,7 @@ public class playerScript : MonoBehaviour
             particles.SetActive(false);
 			anim.SetBool("Run", false);
 		}
+
 
 
 		// Moving to the Sides
@@ -132,15 +136,24 @@ public class playerScript : MonoBehaviour
 		}
 
 		//Punch animation
-		if (Input.GetKeyDown(KeyCode.Z)) {
+		if (grounded && Input.GetKeyDown(KeyCode.Z)) {
 
 			anim.SetBool("Punch", true);
 			punch = true;
+            punchArea.gameObject.SetActive(true);
+
+            if (transform.localScale.x < 0) {
+                this.rigidbody2D.AddForce(new Vector2(-1000f, 0));
+            }
+            else {
+                this.rigidbody2D.AddForce(new Vector2(1000f, 0));
+            }
 
 		} 
 
 		if (!punch) {
 			anim.SetBool("Punch", false);
+            punchArea.gameObject.SetActive(false);
 		}
 	
 	}
@@ -155,7 +168,7 @@ public class playerScript : MonoBehaviour
 		}
 
         //if hit by enemy
-        if (other.tag == "deadly" && !dead && !punch && damageTimer >= damageWait)
+        if (other.tag == "deadly" && !dead && damageTimer >= damageWait)
         {
             health -= 2;
             OnHit();
@@ -187,7 +200,7 @@ public class playerScript : MonoBehaviour
         }
 
         //if hit by enemy
-        if (other.tag == "deadly" && !dead && !punch && damageTimer >= damageWait)
+        if (other.tag == "deadly" && !dead && damageTimer >= damageWait)
         {
             health -= 2;
             OnHit();

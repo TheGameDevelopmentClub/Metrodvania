@@ -46,22 +46,31 @@ public class foeScript : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		
-		if (other.tag == "player" && player.punch) {
+
+        if (other.tag == "Punch")
+        {
 
             dead = true;
-			anim.SetBool("Dead", true);
-			anim.SetBool("Moving", false);
+            anim.SetBool("Dead", true);
+            anim.SetBool("Moving", false);
             rigidbody2D.velocity = new Vector2(0, 0);
-			rigidbody2D.AddForce(new Vector2(100, 50));
-			Destroy(this.gameObject, 1f);
-			gameObject.tag = "neutralized";
-		}
+
+            if (pl.transform.position.x - this.transform.position.x <= 0)
+            {
+                rigidbody2D.AddForce(new Vector2(100, 50));
+            }
+            else
+            {
+                rigidbody2D.AddForce(new Vector2(-100, 50));
+            }
+            Destroy(this.gameObject, 1f);
+            gameObject.tag = "neutralized";
+        }
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
 		
-		if (other.tag == "player" && player.punch) {
+		if (other.tag == "Punch") {
 			
 			dead = true;
 			anim.SetBool("Dead", true);
