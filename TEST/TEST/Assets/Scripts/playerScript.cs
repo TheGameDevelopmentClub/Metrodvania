@@ -87,7 +87,6 @@ public class playerScript : MonoBehaviour
 		}
 
 
-
 		// Moving to the Sides
 		if (Input.GetKey(KeyCode.RightArrow)) {
 			anim.SetBool("Moving", true);
@@ -130,6 +129,8 @@ public class playerScript : MonoBehaviour
 			canJump = false;
 		}
 
+     
+
 		//Dead by jump of map
 		if (transform.position.y < -10) {
 			//Application.LoadLevel(Application.loadedLevel);
@@ -141,20 +142,24 @@ public class playerScript : MonoBehaviour
 			anim.SetBool("Punch", true);
 			punch = true;
             punchArea.gameObject.SetActive(true);
-
-            if (transform.localScale.x < 0) {
-                this.rigidbody2D.AddForce(new Vector2(-1000f, 0));
-            }
-            else {
-                this.rigidbody2D.AddForce(new Vector2(1000f, 0));
-            }
-
 		} 
 
 		if (!punch) {
 			anim.SetBool("Punch", false);
             punchArea.gameObject.SetActive(false);
-		}
+        }
+        else {
+
+            //Trying to create a slide move when punching
+            if (transform.localScale.x < 0)
+            {
+                this.rigidbody2D.AddForce(new Vector2(-2, 0), ForceMode2D.Impulse);
+            }
+            else
+            {
+                this.rigidbody2D.AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
+            }
+        }
 	
 	}
 
