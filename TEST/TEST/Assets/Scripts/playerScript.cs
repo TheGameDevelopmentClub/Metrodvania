@@ -30,6 +30,11 @@ public class playerScript : MonoBehaviour
     bool canRun;
     public GameObject particles;
 
+    //Dash variables 
+    public bool canMove;
+    private float dashMaxTime = 0.15f;
+    private float dashTimer;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -37,6 +42,8 @@ public class playerScript : MonoBehaviour
 		dead = false;
         health = 10f;
         punchArea.gameObject.SetActive(false);
+        canMove = true;
+        dashTimer = 1f;
 
 	}
 	
@@ -87,14 +94,16 @@ public class playerScript : MonoBehaviour
 		}
 
 
-		// Moving to the Sides
-		if (Input.GetKey(KeyCode.RightArrow)) {
+		// Moving to the Sides                 //This blocks the movements
+		if (Input.GetKey(KeyCode.RightArrow) && canMove) {
 			anim.SetBool("Moving", true);
 			rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
 			transform.localScale = new Vector3(1, 1 ,1);
             particles.transform.rotation = Quaternion.Euler(new Vector3(302.5309f, 270f, 90f));
-			
-		} else if (Input.GetKey(KeyCode.LeftArrow)) {
+
+        }                               
+        else if (Input.GetKey(KeyCode.LeftArrow) && canMove)
+        {
 			anim.SetBool("Moving", true);
 			rigidbody2D.velocity = new Vector2(-speed, rigidbody2D.velocity.y);
 			transform.localScale = new Vector3(-1, 1 ,1);
@@ -137,7 +146,7 @@ public class playerScript : MonoBehaviour
 		}
 
 		//Punch animation
-		if (grounded && Input.GetKeyDown(KeyCode.Z)) {
+		if (grounded && Input.GetKey(KeyCode.Z)) {
 
 			anim.SetBool("Punch", true);
 			punch = true;
@@ -149,7 +158,7 @@ public class playerScript : MonoBehaviour
             punchArea.gameObject.SetActive(false);
         }
         else {
-
+            /*
             //Trying to create a slide move when punching
             if (transform.localScale.x < 0)
             {
@@ -158,6 +167,34 @@ public class playerScript : MonoBehaviour
             else
             {
                 this.rigidbody2D.AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
+            }*/
+        }
+
+
+        //Dash movement when press the X bottom. Can only be done every 1.5 secs
+        if ( Input.GetKeyDown(KeyCode.X) && dashTimer > 1f) {
+
+            
+            canMove = false;
+            dashTimer = 0f;
+        }
+        dashTimer += Time.deltaTime;
+
+        if (dashTimer > dashMaxTime) {
+
+            anim.SetBool("Dash", false);
+            canMove = true;
+        }
+        else {
+            if (grounded) {anim.SetBool("Dash", true); }
+            
+            if (transform.localScale.x < 0)
+            {
+                this.rigidbody2D.AddForce(new Vector2(8, 0), ForceMode2D.Impulse);
+            }
+            else
+            {
+                this.rigidbody2D.AddForce(new Vector2(-8, 0), ForceMode2D.Impulse);
             }
         }
 	
