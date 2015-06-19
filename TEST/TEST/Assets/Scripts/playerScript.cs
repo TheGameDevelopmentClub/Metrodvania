@@ -146,7 +146,7 @@ public class playerScript : MonoBehaviour
 		}
 
 		//Punch animation
-		if (grounded && Input.GetKey(KeyCode.Z)) {
+		if (grounded && (Input.GetKey(KeyCode.Z) || Input.GetButtonDown("B"))) {
 
 			anim.SetBool("Punch", true);
 			punch = true;
@@ -172,7 +172,7 @@ public class playerScript : MonoBehaviour
 
 
         //Dash movement when press the X bottom. Can only be done every 1.5 secs
-        if ( Input.GetKeyDown(KeyCode.X) && dashTimer > 1f) {
+        if ( (Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown("LB")) && dashTimer > 1f) {
 
             
             canMove = false;
