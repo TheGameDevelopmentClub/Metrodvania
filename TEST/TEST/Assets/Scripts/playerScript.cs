@@ -69,12 +69,9 @@ public class playerScript : MonoBehaviour
         
         //damage blinking
         if (damageTimer <= (damageWait/4)) this.renderer.enabled = false;
-        if (damageTimer > (damageWait / 4) && damageTimer <= (damageWait / 2)) this.renderer.enabled = true;
-        if (damageTimer > (damageWait/ 2) && damageTimer < (damageWait * 3 / 4)) this.renderer.enabled = false;
-        if (damageTimer >= (damageWait / 4)) this.renderer.enabled = true;           
-
-
-        
+        else if (damageTimer > (damageWait / 4) && damageTimer <= (damageWait / 2)) this.renderer.enabled = true;
+        else if (damageTimer > (damageWait/ 2) && damageTimer < (damageWait * 3 / 4)) this.renderer.enabled = false;
+        else if (damageTimer >= (damageWait / 4)) this.renderer.enabled = true;        
 
 
         //else if (anim.GetBool("DamageTaken"))
@@ -83,8 +80,9 @@ public class playerScript : MonoBehaviour
         //}
 
 		//Sprint
-		speed = Input.GetKey(KeyCode.LeftShift)? initialSpeed*runMultiplier : initialSpeed;
-		if(grounded && rigidbody2D.velocity.x != 0 && Input.GetKey(KeyCode.LeftShift) && canRun) {
+        speed = (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) ? initialSpeed * runMultiplier : initialSpeed;
+        if (grounded && rigidbody2D.velocity.x != 0 && (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) && canRun)
+        {
 
             particles.SetActive(true);
 			anim.SetBool("Run", true);
@@ -95,14 +93,14 @@ public class playerScript : MonoBehaviour
 
 
 		// Moving to the Sides                 //This blocks the movements
-		if (Input.GetKey(KeyCode.RightArrow) && canMove) {
+		if ((Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("D-Pad X") == 1)&& canMove) {
 			anim.SetBool("Moving", true);
 			rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
 			transform.localScale = new Vector3(1, 1 ,1);
             particles.transform.rotation = Quaternion.Euler(new Vector3(302.5309f, 270f, 90f));
 
         }                               
-        else if (Input.GetKey(KeyCode.LeftArrow) && canMove)
+        else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("D-Pad X") == -1) && canMove)
         {
 			anim.SetBool("Moving", true);
 			rigidbody2D.velocity = new Vector2(-speed, rigidbody2D.velocity.y);
@@ -120,14 +118,14 @@ public class playerScript : MonoBehaviour
 		anim.SetBool("Grounded", grounded);
 		anim.SetFloat("velocityY", rigidbody2D.velocity.y);
 
-		if (grounded && Input.GetKeyDown(KeyCode.Space)) {
+		if (grounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("A"))) {
 
 			timer = 0;
 			canJump = true;
 			rigidbody2D.AddForce(new Vector2(0, 3*jumpForce));
             anim.SetBool("Push", false);
 		
-		} else if (Input.GetKey(KeyCode.Space) && canJump && timer<maxTimer) {
+		} else if ((Input.GetKey(KeyCode.Space) || Input.GetButton("A")) && canJump && timer<maxTimer) {
 
 			timer += Time.deltaTime;
 			rigidbody2D.AddForce(new Vector2(0, jumpForce));

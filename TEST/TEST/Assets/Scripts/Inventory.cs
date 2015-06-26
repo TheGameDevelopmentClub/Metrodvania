@@ -19,11 +19,12 @@ public class Inventory : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Q)) {
+		if (Input.GetKeyDown(KeyCode.Q) || Input.GetAxis("Triggers") == -1) {
 			if (selected == 0) selected = inventory.Count - 1;
 			else selected--;
 		}
-		if (Input.GetKeyDown (KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetAxis("Triggers") == 1)
+        {
 			if (selected == inventory.Count - 1) selected = 0;
 			else selected++;
 		}
