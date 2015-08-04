@@ -1,27 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class foeScript : MonoBehaviour {
+public class foeScript : EnemyScript {
 
-	Animator anim;
-	public playerScript player;
-	bool dead;
-    public GameObject pl;
-
-	float timer;
-	public float maxTimer = 2.5f;
-	public float speed = 1f;
-	private float side = 1.0f;
-	private float walkAmount;
-
-    private float alertTimer;
-    private float maxAlertTimer = 1.5f;
-
-
-    //Stages of behavior
-    public bool movingStage;
-    public bool alertStage;
-    public bool attackingStage;
+	
+    private bool alertStage;
+    private bool attackingStage;
+    protected float alertTimer;
+    protected float maxAlertTimer = 1.5f;
 
 	// Use this for initialization
 	void Start () {
@@ -94,7 +80,7 @@ public class foeScript : MonoBehaviour {
             
         }
         ///////////////////////
-        // Attacking the enemy  
+        // Attacking the player  
         //////////////////////
         else if (attackingStage) {
 
@@ -120,51 +106,6 @@ public class foeScript : MonoBehaviour {
             } 
 
         }
-	}
-
-	void OnTriggerEnter2D(Collider2D other) {
-
-        if (other.tag == "Punch")
-        {
-
-            dead = true;
-            anim.SetBool("Dead", true);
-            anim.SetBool("Moving", false);
-            rigidbody2D.velocity = new Vector2(0, 0);
-
-            if (pl.transform.position.x - this.transform.position.x <= 0)
-            {
-                rigidbody2D.AddForce(new Vector2(100, 50));
-            }
-            else
-            {
-                rigidbody2D.AddForce(new Vector2(-100, 50));
-            }
-            Destroy(this.gameObject, 1f);
-            gameObject.tag = "neutralized";
-        }
-	}
-
-	void OnTriggerStay2D(Collider2D other) {
-		
-		if (other.tag == "Punch") {
-			
-			dead = true;
-			anim.SetBool("Dead", true);
-			anim.SetBool("Moving", false);
-			rigidbody2D.velocity = new Vector2(0, 0);
-
-            if (pl.transform.position.x - this.transform.position.x <= 0)
-            {
-                rigidbody2D.AddForce(new Vector2(100, 50));
-            }
-            else
-            {
-                rigidbody2D.AddForce(new Vector2(-100, 50));
-            }
-			Destroy(this.gameObject, 1f);
-			gameObject.tag = "neutralized";
-		}
 	}
 	
 }

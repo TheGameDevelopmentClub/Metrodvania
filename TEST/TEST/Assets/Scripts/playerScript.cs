@@ -74,11 +74,6 @@ public class playerScript : MonoBehaviour
         else if (damageTimer >= (damageWait / 4)) this.renderer.enabled = true;        
 
 
-        //else if (anim.GetBool("DamageTaken"))
-        //{
-            //anim.SetBool("DamageTaken", false);
-        //}
-
 		//Sprint
         speed = (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) ? initialSpeed * runMultiplier : initialSpeed;
         if (grounded && rigidbody2D.velocity.x != 0 && (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) && canRun)
@@ -155,18 +150,6 @@ public class playerScript : MonoBehaviour
 			anim.SetBool("Punch", false);
             punchArea.gameObject.SetActive(false);
         }
-        else {
-            /*
-            //Trying to create a slide move when punching
-            if (transform.localScale.x < 0)
-            {
-                this.rigidbody2D.AddForce(new Vector2(-2, 0), ForceMode2D.Impulse);
-            }
-            else
-            {
-                this.rigidbody2D.AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
-            }*/
-        }
 
 
         //Dash movement when press the X bottom. Can only be done every 1.5 secs
@@ -197,6 +180,10 @@ public class playerScript : MonoBehaviour
         }
 	
 	}
+
+    ///////////////////////////
+    ///     Player Damage
+    ///////////////////////////
 
 	void OnTriggerEnter2D(Collider2D other) {
 
@@ -230,42 +217,7 @@ public class playerScript : MonoBehaviour
             }
         }
 	}
-
-    void OnTriggerStay2D(Collider2D other) {
-
-        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
-        {
-            canRun = false;
-            anim.SetBool("Push", true);           
-        }
-
-        //if hit by enemy
-        if (other.tag == "deadly" && !dead && damageTimer >= damageWait)
-        {
-            health -= 2;
-            OnHit();
-        }
-
-        //if Hit by projectile
-        if (other.tag == "projectile" && !dead && damageTimer >= damageWait)
-        {
-            health--;
-            OnHit();
-            anim.SetBool("Punch", false);
-        }
-
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-
-        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
-        {
-            canRun = true;
-            anim.SetBool("Push", false);        
-        }
-
-    }
-
+    
     void OnHit()
     {
         damageTimer = 0f;
@@ -282,6 +234,34 @@ public class playerScript : MonoBehaviour
         else
         {
             //anim.SetBool("DamageTaken", true);
+     
         }
     }
+
+
+    ///////////////////////////
+    ///     Mooving box
+    ///////////////////////////
+
+    void OnTriggerStay2D(Collider2D other) {
+
+        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
+        {
+            canRun = false;
+            anim.SetBool("Push", true);           
+        }
+
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+
+        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
+        {
+            canRun = true;
+            anim.SetBool("Push", false);        
+        }
+
+    }
+
+    
 }
