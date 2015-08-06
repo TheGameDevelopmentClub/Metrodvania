@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class foeScript : EnemyScript {
 
 	
     private bool alertStage;
     private bool attackingStage;
+    private bool evasiveStage;
     protected float alertTimer;
     protected float maxAlertTimer = 1.5f;
 
@@ -13,10 +15,15 @@ public class foeScript : EnemyScript {
 	void Start () {
 		anim = GetComponent <Animator>();
 		dead = false;
+        health = 1f;
+
+        attacksReceived = new List<string>();
 
         movingStage = true;
         alertStage = false;
         attackingStage = false;
+        evasiveStage = false;
+        defenceON = false; 
 
         alertTimer = 0;
 	}
@@ -55,6 +62,7 @@ public class foeScript : EnemyScript {
                 movingStage = false;
                 alertStage = true;
                 attackingStage = false;
+                evasiveStage = false;
             } 
         }
         //////////////////////////////////////////
@@ -76,6 +84,7 @@ public class foeScript : EnemyScript {
                 movingStage = false;
                 alertStage = false;
                 attackingStage = true;
+                evasiveStage = false;
             }
             
         }
@@ -103,9 +112,18 @@ public class foeScript : EnemyScript {
                 movingStage = true;
                 alertStage = false;
                 attackingStage = false;
-            } 
+                evasiveStage = false;
+            }
 
         }
 	}
+
+    // Dealing damage to the player
+    override protected void dealDamage(Collider2D other)
+    {
+
+        other.gameObject.GetComponent<playerScript>().takeDamage(2, null);
+
+    }
 	
 }

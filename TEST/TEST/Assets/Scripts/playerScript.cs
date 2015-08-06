@@ -187,24 +187,16 @@ public class playerScript : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other) {
 
-		//If hit death wall
-		if (other.tag == "deathwall" && !dead) 
-		{
-			health = 0;
-			OnHit();
-		}
-
-        //if hit by enemy
-        if (other.tag == "deadly" && !dead && damageTimer >= damageWait)
+        //if hit enemy
+        if (other.tag == "deadly" && punch && ((this.transform.localScale.x>0 && other.gameObject.transform.localScale.x<0)
+            || (this.transform.localScale.x < 0 && other.gameObject.transform.localScale.x > 0)))
         {
-            health -= 2;
-            OnHit();
+            other.gameObject.GetComponent<foeScript>().takeDamage(1, null, null);
 		}
 
         //if Hit by projectile
         if (other.tag == "projectile" && !dead && damageTimer >= damageWait) {
-            health -= 2;
-            OnHit();
+            takeDamage(2, null);
             anim.SetBool("Punch", false);
         }
 
@@ -218,23 +210,33 @@ public class playerScript : MonoBehaviour
         }
 	}
     
-    void OnHit()
+    public bool takeDamage(int damageAmount, string effect) 
     {
-        damageTimer = 0f;
-        if (health <= 0f)
+        if (damageTimer >= damageWait && !dead)
         {
-            anim.SetBool("Run", false);
-            anim.SetBool("Moving", false);
-            anim.SetBool("Death", true);
-            anim.SetBool("Punch", false);
-            anim.SetBool("Grounded", true);
-            dead = true;
-            rigidbody2D.AddForce(new Vector2(0, 100));
+            damageTimer = 0f;
+            health -= damageAmount;
+            if (health <= 0f)
+            {
+                anim.SetBool("Run", false);
+                anim.SetBool("Moving", false);
+                anim.SetBool("Death", true);
+                anim.SetBool("Punch", false);
+                anim.SetBool("Grounded", true);
+                dead = true;
+                rigidbody2D.AddForce(new Vector2(0, 100));
+            }
+            else
+            {
+                //anim.SetBool("DamageTaken", true);
+
+            }
+
+            return true;
         }
         else
         {
-            //anim.SetBool("DamageTaken", true);
-     
+            return false;
         }
     }
 
