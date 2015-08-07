@@ -9,10 +9,13 @@ public class EnemyScript : MonoBehaviour {
     protected bool dead;
     protected float health;
     public GameObject player;
+    protected float damageTimer;
+    protected float damageWait;
 
     // "Learning" AI
-    protected List<string> attacksReceived;
+    protected string[] attacksReceived = new string[30];
     protected string lastAttack;
+    protected int arrayPos = 0;
 
     //Movement variables
     protected float timer;
@@ -39,19 +42,22 @@ public class EnemyScript : MonoBehaviour {
     // Taking damage from player
     public bool takeDamage (int damage, string type, string effect)
     {
-        if (!defenceON)
+        if (!defenceON && damageTimer >= damageWait)
         {
+            damageTimer = 0f;
             health -= damage;
-            attacksReceived.Add(type);
+            add(type);
             lastAttack = type;
 
             if (player.transform.position.x - this.transform.position.x <= 0)
             {
-                rigidbody2D.AddForce(new Vector2(100, 50));
+                rigidbody2D.velocity = new Vector2(0, 0);
+                rigidbody2D.AddForce(new Vector2(400, 50));
             }
             else
             {
-                rigidbody2D.AddForce(new Vector2(-100, 50));
+                rigidbody2D.velocity = new Vector2(0, 0);
+                rigidbody2D.AddForce(new Vector2(-400, 50));
             }
 
             if (health <= 0)
@@ -83,23 +89,30 @@ public class EnemyScript : MonoBehaviour {
             }
         }
     }
+    // "Abstract" of dealDamage
+    protected virtual void dealDamage(Collider2D other) { }
 
-    protected virtual void dealDamage(Collider2D other) { 
-    
+
+    // Add attckat to the array
+    protected void add(string att)
+    {
+        attacksReceived[arrayPos] = att;
+        arrayPos++;
     }
 
     // Count the number of occurrences of the las attack
     protected int counting()
     {
         int count = 0;
-        foreach (string value in attacksReceived)
+        int x = 0;
+        while (x < arrayPos)
         {
-            if (value.Equals(lastAttack))
+            if (attacksReceived[x].Equals(lastAttack))
             {
                 count++;
             }
+            x++;
         }
-
 
         return count;
     }

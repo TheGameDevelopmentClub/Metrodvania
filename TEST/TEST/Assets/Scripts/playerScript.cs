@@ -189,9 +189,11 @@ public class playerScript : MonoBehaviour
 
         //if hit enemy
         if (other.tag == "deadly" && punch && ((this.transform.localScale.x>0 && other.gameObject.transform.localScale.x<0)
-            || (this.transform.localScale.x < 0 && other.gameObject.transform.localScale.x > 0)))
+            || (this.transform.localScale.x < 0 && other.gameObject.transform.localScale.x > 0)
+            || (this.transform.localScale.x > 0 && other.gameObject.transform.localScale.x > 0 && this.transform.position.x < other.gameObject.transform.position.x)
+            || (this.transform.localScale.x < 0 && other.gameObject.transform.localScale.x < 0 && this.transform.position.x > other.gameObject.transform.position.x)))
         {
-            other.gameObject.GetComponent<foeScript>().takeDamage(1, null, null);
+            other.gameObject.GetComponent<foeScript>().takeDamage(1, "melee", null);
 		}
 
         //if Hit by projectile

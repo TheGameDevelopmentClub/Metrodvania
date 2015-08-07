@@ -15,9 +15,11 @@ public class foeScript : EnemyScript {
 	void Start () {
 		anim = GetComponent <Animator>();
 		dead = false;
-        health = 1f;
+        health = 5f;
+        damageTimer = 0f;
+        damageWait = 0.7f;
 
-        attacksReceived = new List<string>();
+        attacksReceived = new string[30];
 
         movingStage = true;
         alertStage = false;
@@ -30,6 +32,8 @@ public class foeScript : EnemyScript {
 	
 	// Update is called once per frame
 	void Update () {
+
+        damageTimer += Time.deltaTime;
 
 		//When dead
 		if (dead) {
@@ -79,11 +83,21 @@ public class foeScript : EnemyScript {
             alertTimer += Time.deltaTime;
 
             // Attaking time
-            if (alertTimer > maxAlertTimer) {
+            if (alertTimer > maxAlertTimer && Vector2.Distance(transform.position, player.transform.position) < 6f)
+            {
 
                 movingStage = false;
                 alertStage = false;
                 attackingStage = true;
+                evasiveStage = false;
+            }
+
+            //Will chase till player goes away
+            if (alertTimer > maxAlertTimer && Vector2.Distance(transform.position, player.transform.position) > 6f)
+            {
+                movingStage = true;
+                alertStage = false;
+                attackingStage = false;
                 evasiveStage = false;
             }
             
@@ -103,6 +117,46 @@ public class foeScript : EnemyScript {
             else {
 
                 rigidbody2D.velocity = new Vector2(speed*1.5f, rigidbody2D.velocity.y);
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+
+            //Will chase till player goes away
+            if (Vector2.Distance(transform.position, player.transform.position) > 6f)
+            {
+                movingStage = false;
+                alertStage = true;
+                attackingStage = false;
+                evasiveStage = false;
+            }
+
+            // Tries to run away
+            if (counting() >= 4)
+            {
+                movingStage = false;
+                alertStage = false;
+                attackingStage = false;
+                evasiveStage = true;
+            }
+
+        }
+
+        ///////////////////////
+        /// Evasive manouver
+        ///////////////////////
+        else if (evasiveStage)
+        {
+            anim.SetBool("Moving", true);
+
+            if (player.transform.position.x > this.transform.position.x)
+            {
+
+                rigidbody2D.velocity = new Vector2(-speed * 1.5f, rigidbody2D.velocity.y);
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            else
+            {
+
+                rigidbody2D.velocity = new Vector2(speed * 1.5f, rigidbody2D.velocity.y);
                 transform.localScale = new Vector3(1, 1, 1);
             }
 
