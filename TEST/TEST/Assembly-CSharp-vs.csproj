@@ -64,24 +64,7 @@
      <Compile Include="Assets\Scripts\switchTPScript.cs" />
      <Compile Include="Assets\Scripts\turretProjectile.cs" />
      <Compile Include="Assets\Scripts\turretScript.cs" />
-     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
-     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TileAnimator.cs" />
-     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TiledMap.cs" />
-     <None Include="Assets\Tiled2Unity\Imported\MagmaManLair-WithCollision.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Imported\DiveMan-water.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Prefabs\_ReadMe.txt" />
-     <None Include="Assets\Tiled2Unity\Shaders\shaTiledMap.shader" />
-     <None Include="Assets\Tiled2Unity\Imported\MagmaManLair-NoCollision.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Imported\CutMan-WithLadders.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Imported\HeatManBlocks.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Materials\_ReadMe.txt" />
-     <None Include="Assets\Tiled2Unity\Textures\_ReadMe.txt" />
-     <None Include="Assets\Tiled2Unity\Imported\Stage 1 Full.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Imported\Stage 1 Part 1.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\License.txt" />
-     <None Include="Assets\Tiled2Unity\Imported\RedDragon-WithSlopes.tiled2unity.xml" />
-     <None Include="Assets\Tiled2Unity\Imported\_ReadMe.txt" />
-     <None Include="Assets\Tiled2Unity\Meshes\_ReadMe.txt" />
+     <Compile Include="Assets\Tilemaps\TileWindow.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
  </Reference>
