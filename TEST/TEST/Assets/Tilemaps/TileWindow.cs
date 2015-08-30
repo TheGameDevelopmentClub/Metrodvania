@@ -23,6 +23,7 @@ public class TileWindow : EditorWindow
 	private static GameObject parentObj;
 	private static int layerOrd;
 	private static string tagName;
+	private static int layerName;
 	private int index;
 	private string[] options;
 	private Sprite[] allSprites;
@@ -141,6 +142,7 @@ public class TileWindow : EditorWindow
 									newgo.transform.position = mouseWorldPos;
 									newgo.GetComponent<SpriteRenderer>().sprite = activeSprite;
 									newgo.tag = tagName;
+									newgo.layer = layerName;
 									if (addBoxCollider)
 										newgo.AddComponent<BoxCollider2D>();
 									//if (addPolygonCollider)
@@ -167,12 +169,15 @@ public class TileWindow : EditorWindow
 									newgo.transform.position = mouseWorldPos;
 									newgo.GetComponent<SpriteRenderer>().sprite = activeSprite;
 									newgo.tag = tagName;
+									newgo.layer = layerName;
 									if (addBoxCollider)
 										newgo.AddComponent<BoxCollider2D>();
 									//if (addPolygonCollider)
 									//    newgo.AddComponent<PolygonCollider2D>();
 									if (addPolygonCollider)
 										newgo.AddComponent<PolygonCollider2D>();
+									if (parentObj != null)
+										newgo.transform.parent = parentObj.transform;
 								}
 							}
 							if (selected == DRAWOPTION.PaintPrefab)		
@@ -295,6 +300,7 @@ public class TileWindow : EditorWindow
 			options[i] = files[i].Replace(Application.dataPath + "/Tilemaps/", "");
 		}
 		index = EditorGUILayout.Popup(index, options, GUILayout.Width(256));
+
 		GUILayout.BeginHorizontal();
 		isGrid = EditorGUILayout.Toggle(isGrid, GUILayout.Width(16));
 		gridSize = EditorGUILayout.Vector2Field("Grid Size (0.05 minimum)", gridSize,  GUILayout.Width(236));
@@ -338,6 +344,11 @@ public class TileWindow : EditorWindow
 		EditorGUILayout.LabelField("Tag", GUILayout.Width(32));
 		GUILayout.BeginHorizontal();
 		tagName = EditorGUILayout.TagField(tagName, GUILayout.Width(236));
+		GUILayout.EndHorizontal();
+
+		EditorGUILayout.LabelField("Layer", GUILayout.Width(40));
+		GUILayout.BeginHorizontal();
+		layerName = EditorGUILayout.LayerField ("", layerName);//GUILayout.Width(236));
 		GUILayout.EndHorizontal();
 		
 		GUILayout.BeginHorizontal();
