@@ -12,10 +12,10 @@ public class playerScript : MonoBehaviour
 	public Transform point1;
 	public Transform point2;
 	public LayerMask onlyGroundLayer;
-	public float jumpForce = 75f;
+	public float jumpForce = 40;
 	public float timer;
 	bool canJump;
-	public float maxTimer = 0.2f;
+	public float maxTimer = 0.055f;
 
     //Combat Variables
     public float health = 10f;
@@ -25,7 +25,7 @@ public class playerScript : MonoBehaviour
 
 	//Speed Variables
 	float speed = 2f;
-	public float initialSpeed = 2f;
+	public float initialSpeed = 3f;
 	public float runMultiplier = 1.5f;
     bool canRun;
     public GameObject particles;
@@ -114,7 +114,6 @@ public class playerScript : MonoBehaviour
 		anim.SetFloat("velocityY", rigidbody2D.velocity.y);
 
 		if (grounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("A"))) {
-
 			timer = 0;
 			canJump = true;
 			rigidbody2D.AddForce(new Vector2(0, 3*jumpForce));

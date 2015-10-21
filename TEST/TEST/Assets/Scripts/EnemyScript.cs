@@ -9,8 +9,8 @@ public class EnemyScript : MonoBehaviour {
     protected bool dead;
     protected float health;
     public GameObject player;
-    protected float damageTimer;
-    protected float damageWait;
+    protected float damageTimer = 0f;
+    protected float damageWait = 0.7f;
 
     // "Learning" AI
     protected string[] attacksReceived = new string[30];
@@ -36,8 +36,14 @@ public class EnemyScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		damageTimer += Time.deltaTime;
+        BehaviorUpdate();
 	}
+	
+	// Behavior Function
+	protected virtual void BehaviorUpdate() {}
+
+	
 
     // Taking damage from player
     public bool takeDamage (int damage, string type, string effect)
