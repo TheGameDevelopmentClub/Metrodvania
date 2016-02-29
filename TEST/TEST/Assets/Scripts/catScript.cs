@@ -2,34 +2,35 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class foeScript : EnemyScript {
+public class catScript : EnemyScript {
 
 	
-    private bool alertStage;
-    private bool attackingStage;
-    private bool evasiveStage;
-    protected float alertTimer;
-    protected float maxAlertTimer = 1.5f;
+    	private bool alertStage;
+    	private bool attackingStage;
+    	protected float alertTimer;
+    	protected float maxAlertTimer = 1.5f;
+	protected bool facingRight;
 
 	// Use this for initialization
 	void Start () {
 		anim = GetComponent <Animator>();
 		dead = false;
-        health = 5f;
+        	health = 1f;
 
-        attacksReceived = new string[30];
+        	attacksReceived = new string[30];
 
-        movingStage = true;
-        alertStage = false;
-        attackingStage = false;
-        evasiveStage = false;
-        defenceON = false; 
+        	movingStage = true;
+        	alertStage = false;
+        	attackingStage = false;
+        	defenceON = false; 
 
-        alertTimer = 0;
+        	alertTimer = 0;
+		facingRight = true;
 	}
 	
 	// Update is called once per frame by update()
 	override protected void BehaviorUpdate () {
+
 
 		//When dead
 		if (dead) {
@@ -37,9 +38,10 @@ public class foeScript : EnemyScript {
 			//rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
 			return;
 		}
-        //////////////////////////////////
+
+        ///////////////////////////////
         // Normal moving. No player near
-        //////////////////////////////////
+        //////////////////////////////
         if (movingStage)
         {
 
@@ -62,7 +64,6 @@ public class foeScript : EnemyScript {
                 movingStage = false;
                 alertStage = true;
                 attackingStage = false;
-                evasiveStage = false;
             } 
         }
         //////////////////////////////////////////
@@ -72,8 +73,10 @@ public class foeScript : EnemyScript {
 
             if (player.transform.position.x < this.transform.position.x) {
                 transform.localScale = new Vector3(-1, 1, 1);
+		facingRight = true;
             } else {
                 transform.localScale = new Vector3(1, 1, 1);
+		facingRight = false;
             }
             anim.SetBool("Moving", false);
             alertTimer += Time.deltaTime;
@@ -81,20 +84,20 @@ public class foeScript : EnemyScript {
             // Attaking time
             if (alertTimer > maxAlertTimer && Vector2.Distance(transform.position, player.transform.position) < 6f)
             {
-
+		
+		alertTimer = 0;
                 movingStage = false;
                 alertStage = false;
                 attackingStage = true;
-                evasiveStage = false;
             }
 
             //Will chase till player goes away
             if (alertTimer > maxAlertTimer && Vector2.Distance(transform.position, player.transform.position) > 6f)
             {
+		alertTimer = 0;
                 movingStage = true;
                 alertStage = false;
                 attackingStage = false;
-                evasiveStage = false;
             }
             
         }
@@ -103,18 +106,34 @@ public class foeScript : EnemyScript {
         //////////////////////
         else if (attackingStage) {
 
-            anim.SetBool("Moving", true);
+           	anim.SetBool("Moving", true);
 
-            if (player.transform.position.x < this.transform.position.x) {
+            	if (facingRight) {
+			// If player jumps over. Wating time to change direction
+			if(player.transform.position.x < this.transform.position.x) {
+				alertTimer += Time.deltaTime;
+				if (alertTimer > maxAlertTimer) {
+					alertTimer = 0;
+					facingRight = false;								
+				}								
+			} 
 
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-speed*1.5f, GetComponent<Rigidbody2D>().velocity.y);
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else {
+			GetComponent<Rigidbody2D>().velocity = new Vector2(speed*1.5f, GetComponent<Rigidbody2D>().velocity.y);
+               		transform.localScale = new Vector3(1, 1, 1);
 
-                GetComponent<Rigidbody2D>().velocity = new Vector2(speed*1.5f, GetComponent<Rigidbody2D>().velocity.y);
-                transform.localScale = new Vector3(1, 1, 1);
-            }
+		} else {
+			// If player jumps over. Wating time to change direction
+			if(player.transform.position.x > this.transform.position.x) {
+				alertTimer += Time.deltaTime;
+				if (alertTimer > maxAlertTimer) {
+					alertTimer = 0;
+					facingRight = true;								
+				}								
+			}
+
+			GetComponent<Rigidbody2D>().velocity = new Vector2(-speed*1.5f, GetComponent<Rigidbody2D>().velocity.y);
+                	transform.localScale = new Vector3(-1, 1, 1); 
+		}
 
             //Will chase till player goes away
             if (Vector2.Distance(transform.position, player.transform.position) > 6f)
@@ -122,7 +141,7 @@ public class foeScript : EnemyScript {
                 movingStage = false;
                 alertStage = true;
                 attackingStage = false;
-                evasiveStage = false;
+
             }
 
             // Tries to run away
@@ -131,38 +150,6 @@ public class foeScript : EnemyScript {
                 movingStage = false;
                 alertStage = false;
                 attackingStage = false;
-                evasiveStage = true;
-            }
-
-        }
-
-        ///////////////////////
-        /// Evasive manouver
-        ///////////////////////
-        else if (evasiveStage)
-        {
-            anim.SetBool("Moving", true);
-
-            if (player.transform.position.x > this.transform.position.x)
-            {
-
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-speed * 1.5f, GetComponent<Rigidbody2D>().velocity.y);
-                transform.localScale = new Vector3(-1, 1, 1);
-            }
-            else
-            {
-
-                GetComponent<Rigidbody2D>().velocity = new Vector2(speed * 1.5f, GetComponent<Rigidbody2D>().velocity.y);
-                transform.localScale = new Vector3(1, 1, 1);
-            }
-
-            //Will chase till player goes away
-            if (Vector2.Distance(transform.position, player.transform.position) > 6f)
-            {
-                movingStage = true;
-                alertStage = false;
-                attackingStage = false;
-                evasiveStage = false;
             }
 
         }
@@ -172,7 +159,7 @@ public class foeScript : EnemyScript {
     override protected void dealDamage(Collider2D other)
     {
 
-        other.gameObject.GetComponent<playerScript>().takeDamage(2, null);
+        other.gameObject.GetComponent<playerScript>().takeDamage(1, null);
 
     }
 	

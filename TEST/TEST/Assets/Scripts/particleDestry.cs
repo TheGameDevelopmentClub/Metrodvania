@@ -7,8 +7,8 @@ public class particleDestry : MonoBehaviour {
 	void Start () {
 
         // Set the sorting layer of the particle system.
-        particleSystem.renderer.sortingLayerName = "Player";
-        particleSystem.renderer.sortingOrder = 4;
+        GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingLayerName = "Player";
+        GetComponent<ParticleSystem>().GetComponent<Renderer>().sortingOrder = 4;
 
         Destroy(this.gameObject, 0.3f);
 	}

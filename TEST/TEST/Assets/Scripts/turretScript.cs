@@ -25,8 +25,8 @@ public class turretScript : MonoBehaviour {
 
             yield return new WaitForSeconds(delay);
             GameObject clone = (GameObject) Instantiate(turretProjectile, transform.position, Quaternion.identity);
-			if (faceLeft) clone.rigidbody2D.velocity = -transform.right * speed;
-			else clone.rigidbody2D.velocity = transform.right * speed;
+			if (faceLeft) clone.GetComponent<Rigidbody2D>().velocity = -transform.right * speed;
+			else clone.GetComponent<Rigidbody2D>().velocity = transform.right * speed;
         }
     }
 }

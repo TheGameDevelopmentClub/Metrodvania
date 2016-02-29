@@ -1,9 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tilemaps\TileWindow.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\playerScript.cs">
     <Files>
-      <File FileName="Assets\Tilemaps\TileWindow.cs" Line="349" Column="57" />
-      <File FileName="Assets\Scripts\playerScript.cs" Line="117" Column="70" />
+      <File FileName="Assets\Scripts\playerScript.cs" Line="273" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

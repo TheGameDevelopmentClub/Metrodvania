@@ -45,7 +45,7 @@ public class harpyScript : MonoBehaviour {
             {
                 direction = direction * -1;
             }
-            rigidbody2D.velocity = new Vector2(transform.position.x, (direction * upDownSpeed));
+            GetComponent<Rigidbody2D>().velocity = new Vector2(transform.position.x, (direction * upDownSpeed));
 
             //Sides movement
             time += Time.deltaTime;
@@ -56,7 +56,7 @@ public class harpyScript : MonoBehaviour {
                 time = 0;
 
             }
-            rigidbody2D.velocity = new Vector2((side * sidesSpeed), rigidbody2D.velocity.y);
+            GetComponent<Rigidbody2D>().velocity = new Vector2((side * sidesSpeed), GetComponent<Rigidbody2D>().velocity.y);
             transform.localScale = new Vector3(-side, 1, 1);
 
         }

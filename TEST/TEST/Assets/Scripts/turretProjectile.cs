@@ -27,7 +27,7 @@ public class turretProjectile : MonoBehaviour {
     //Destroy fancy
     void DestroyIt() {
 
-        collider2D.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
         Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(this.gameObject, 2f);

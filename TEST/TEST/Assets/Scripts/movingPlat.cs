@@ -24,11 +24,11 @@ public class movingPlat : MonoBehaviour {
 
                 if (this.transform.position.x > limit+0.05f)  {
 
-                    this.rigidbody2D.velocity = new Vector2(-moveAmount, 0f);
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(-moveAmount, 0f);
                 }
                 else if (this.transform.position.x >= limit && this.transform.position.x <= limit+0.05f)
                 {
-                    this.rigidbody2D.velocity = new Vector2(0f, 0f);
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                     back = true;
                 }
             }
@@ -37,10 +37,10 @@ public class movingPlat : MonoBehaviour {
                 if (this.transform.position.x < start-0.05f)
                 {
 
-                    this.rigidbody2D.velocity = new Vector2(moveAmount, 0f);
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(moveAmount, 0f);
                 }
                 else if (this.transform.position.x <= start && this.transform.position.x >= start-0.05f) {
-                    this.rigidbody2D.velocity = new Vector2(0f, 0f);
+                    this.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                     this.transform.position = new Vector2(start, this.transform.position.y);
                     back = false;
                     move = false;

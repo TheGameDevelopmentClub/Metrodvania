@@ -6,16 +6,17 @@ public class playerScript : MonoBehaviour
 	Animator anim;
 	bool dead;
 	public bool punch;
+	Rigidbody2D rigidBD;
     
 	//Jump variables
 	public bool grounded;
 	public Transform point1;
 	public Transform point2;
 	public LayerMask onlyGroundLayer;
-	public float jumpForce = 75f;
+	public float jumpForce = 40;
 	public float timer;
 	bool canJump;
-	public float maxTimer = 0.2f;
+	public float maxTimer = 0.055f;
 
     //Combat Variables
     public float health = 10f;
@@ -25,7 +26,7 @@ public class playerScript : MonoBehaviour
 
 	//Speed Variables
 	float speed = 2f;
-	public float initialSpeed = 2f;
+	public float initialSpeed = 3f;
 	public float runMultiplier = 1.5f;
     bool canRun;
     public GameObject particles;
@@ -38,6 +39,7 @@ public class playerScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		rigidBD = (Rigidbody2D)GetComponent<Rigidbody2D> ();
 		anim = GetComponent <Animator> ();
 		dead = false;
         health = 10f;
@@ -57,7 +59,7 @@ public class playerScript : MonoBehaviour
 				Application.LoadLevel(Application.loadedLevel);
 			}
 
-			rigidbody2D.velocity = new Vector2(0,0);
+			rigidBD.velocity = new Vector2(0,0);
 			//collider.enabled = false;
 			return;
 		}
@@ -67,21 +69,16 @@ public class playerScript : MonoBehaviour
             damageTimer += Time.deltaTime;
         }
         
-        //damage blinking
+        /*damage blinking
         if (damageTimer <= (damageWait/4)) this.renderer.enabled = false;
         else if (damageTimer > (damageWait / 4) && damageTimer <= (damageWait / 2)) this.renderer.enabled = true;
         else if (damageTimer > (damageWait/ 2) && damageTimer < (damageWait * 3 / 4)) this.renderer.enabled = false;
-        else if (damageTimer >= (damageWait / 4)) this.renderer.enabled = true;        
+        else if (damageTimer >= (damageWait / 4)) this.renderer.enabled = true;     */   
 
-
-        //else if (anim.GetBool("DamageTaken"))
-        //{
-            //anim.SetBool("DamageTaken", false);
-        //}
 
 		//Sprint
         speed = (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) ? initialSpeed * runMultiplier : initialSpeed;
-        if (grounded && rigidbody2D.velocity.x != 0 && (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) && canRun)
+		if (grounded && rigidBD.velocity.x != 0 && (Input.GetKey(KeyCode.LeftShift) || Input.GetButton("LB")) && canRun)
         {
 
             particles.SetActive(true);
@@ -95,7 +92,7 @@ public class playerScript : MonoBehaviour
 		// Moving to the Sides                 //This blocks the movements
 		if ((Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("D-Pad X") == 1)&& canMove) {
 			anim.SetBool("Moving", true);
-			rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
+			rigidBD.velocity = new Vector2(speed, rigidBD.velocity.y);
 			transform.localScale = new Vector3(1, 1 ,1);
             particles.transform.rotation = Quaternion.Euler(new Vector3(302.5309f, 270f, 90f));
 
@@ -103,32 +100,31 @@ public class playerScript : MonoBehaviour
         else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("D-Pad X") == -1) && canMove)
         {
 			anim.SetBool("Moving", true);
-			rigidbody2D.velocity = new Vector2(-speed, rigidbody2D.velocity.y);
+			rigidBD.velocity = new Vector2(-speed, rigidBD.velocity.y);
 			transform.localScale = new Vector3(-1, 1 ,1);
             particles.transform.rotation = Quaternion.Euler(new Vector3(302.5309f, 270f, -90f));
 
 		} else {
 			anim.SetBool("Moving", false);
-			rigidbody2D.velocity = new Vector2(0 , rigidbody2D.velocity.y);
+			rigidBD.velocity = new Vector2(0 , GetComponent<Rigidbody2D>().velocity.y);
 
 		}
 
 		//Jumping
 		grounded = Physics2D.OverlapArea(point1.position, point2.position, onlyGroundLayer);
 		anim.SetBool("Grounded", grounded);
-		anim.SetFloat("velocityY", rigidbody2D.velocity.y);
+		anim.SetFloat("velocityY", rigidBD.velocity.y);
 
 		if (grounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("A"))) {
-
 			timer = 0;
 			canJump = true;
-			rigidbody2D.AddForce(new Vector2(0, 3*jumpForce));
+			rigidBD.AddForce(new Vector2(0, 3*jumpForce));
             anim.SetBool("Push", false);
 		
 		} else if ((Input.GetKey(KeyCode.Space) || Input.GetButton("A")) && canJump && timer<maxTimer) {
 
 			timer += Time.deltaTime;
-			rigidbody2D.AddForce(new Vector2(0, jumpForce));
+			rigidBD.AddForce(new Vector2(0, jumpForce));
             anim.SetBool("Push", false);
 		
 		} else {
@@ -155,18 +151,6 @@ public class playerScript : MonoBehaviour
 			anim.SetBool("Punch", false);
             punchArea.gameObject.SetActive(false);
         }
-        else {
-            /*
-            //Trying to create a slide move when punching
-            if (transform.localScale.x < 0)
-            {
-                this.rigidbody2D.AddForce(new Vector2(-2, 0), ForceMode2D.Impulse);
-            }
-            else
-            {
-                this.rigidbody2D.AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
-            }*/
-        }
 
 
         //Dash movement when press the X bottom. Can only be done every 1.5 secs
@@ -188,36 +172,34 @@ public class playerScript : MonoBehaviour
             
             if (transform.localScale.x < 0)
             {
-                this.rigidbody2D.AddForce(new Vector2(8, 0), ForceMode2D.Impulse);
+				rigidBD.AddForce(new Vector2(8, 0), ForceMode2D.Impulse);
             }
             else
             {
-                this.rigidbody2D.AddForce(new Vector2(-8, 0), ForceMode2D.Impulse);
+				rigidBD.AddForce(new Vector2(-8, 0), ForceMode2D.Impulse);
             }
         }
 	
 	}
 
+    ///////////////////////////
+    ///     Player Damage
+    ///////////////////////////
+
 	void OnTriggerEnter2D(Collider2D other) {
 
-		//If hit death wall
-		if (other.tag == "deathwall" && !dead) 
-		{
-			health = 0;
-			OnHit();
-		}
-
-        //if hit by enemy
-        if (other.tag == "deadly" && !dead && damageTimer >= damageWait)
+        //if hit enemy
+        if (other.tag == "deadly" && punch && ((this.transform.localScale.x>0 && other.gameObject.transform.localScale.x<0)
+            || (this.transform.localScale.x < 0 && other.gameObject.transform.localScale.x > 0)
+            || (this.transform.localScale.x > 0 && other.gameObject.transform.localScale.x > 0 && this.transform.position.x < other.gameObject.transform.position.x)
+            || (this.transform.localScale.x < 0 && other.gameObject.transform.localScale.x < 0 && this.transform.position.x > other.gameObject.transform.position.x)))
         {
-            health -= 2;
-            OnHit();
+            other.gameObject.GetComponent<foeScript>().takeDamage(1, "melee", null);
 		}
 
         //if Hit by projectile
         if (other.tag == "projectile" && !dead && damageTimer >= damageWait) {
-            health -= 2;
-            OnHit();
+            takeDamage(2, null);
             anim.SetBool("Punch", false);
         }
 
@@ -230,35 +212,55 @@ public class playerScript : MonoBehaviour
             }
         }
 	}
+    
+    public bool takeDamage(int damageAmount, string effect) 
+    {
+        if (damageTimer >= damageWait && !dead)
+        {
+            damageTimer = 0f;
+            health -= damageAmount;
+            if (health <= 0f)
+            {
+                anim.SetBool("Run", false);
+                anim.SetBool("Moving", false);
+                anim.SetBool("Death", true);
+                anim.SetBool("Punch", false);
+                anim.SetBool("Grounded", true);
+                dead = true;
+				rigidBD.AddForce(new Vector2(0, 100));
+            }
+            else
+            {
+                //anim.SetBool("DamageTaken", true);
+
+            }
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    ///////////////////////////
+    ///     Mooving box
+    ///////////////////////////
 
     void OnTriggerStay2D(Collider2D other) {
 
-        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
+		if ((other.tag == "box") && rigidBD.velocity.y == 0 && !dead)
         {
             canRun = false;
             anim.SetBool("Push", true);           
-        }
-
-        //if hit by enemy
-        if (other.tag == "deadly" && !dead && damageTimer >= damageWait)
-        {
-            health -= 2;
-            OnHit();
-        }
-
-        //if Hit by projectile
-        if (other.tag == "projectile" && !dead && damageTimer >= damageWait)
-        {
-            health--;
-            OnHit();
-            anim.SetBool("Punch", false);
         }
 
     }
 
     void OnTriggerExit2D(Collider2D other) {
 
-        if ((other.tag == "box") && rigidbody2D.velocity.y == 0 && !dead)
+		if ((other.tag == "box") && rigidBD.velocity.y == 0 && !dead)
         {
             canRun = true;
             anim.SetBool("Push", false);        
@@ -266,22 +268,5 @@ public class playerScript : MonoBehaviour
 
     }
 
-    void OnHit()
-    {
-        damageTimer = 0f;
-        if (health <= 0f)
-        {
-            anim.SetBool("Run", false);
-            anim.SetBool("Moving", false);
-            anim.SetBool("Death", true);
-            anim.SetBool("Punch", false);
-            anim.SetBool("Grounded", true);
-            dead = true;
-            rigidbody2D.AddForce(new Vector2(0, 100));
-        }
-        else
-        {
-            //anim.SetBool("DamageTaken", true);
-        }
-    }
+    
 }
