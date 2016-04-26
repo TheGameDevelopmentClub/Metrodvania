@@ -12,16 +12,30 @@ public class cameraBehavior : MonoBehaviour {
     private Vector3 finalPos;
     public bool keepRight = false;
     private bool keepLeft = false;
+	private Camera camera;
+    // Use this for initialization
+    void Start() {
+        camera = Camera.main;        
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
 
-        if (player.transform.position.x > (this.transform.position.x + 6.05f) || keepRight) {
+    // Update is called once per frame
+    void Update()
+    {
+		
+        //First Room
+        if (player.transform.position.x > 658.77f && player.transform.position.x < 673.82f && player.transform.position.y > -869.73f && player.transform.position.y < -865.06f)
+        {
+			camera.fieldOfView = 3.8f;
+        }
+        else if (player.transform.position.x > 669f && player.transform.position.x < 673.84f && player.transform.position.y > -878.36f && player.transform.position.y < -869.73f)
+        {
+			camera.fieldOfView = 1.57f;
+			camera.transform.position = Vector3.Lerp(camera.transform.position, new Vector3(player.transform.position.x, player.transform.position.y, -10f), Time.deltaTime*1.4f);
+        }
+    }
+}
+      /*if (player.transform.position.x > (this.transform.position.x + 6.05f) || keepRight) {
 
             //Only get in the IF if is the first time that makes this "CLICLE"
             if (!keepRight) { 
@@ -57,6 +71,4 @@ public class cameraBehavior : MonoBehaviour {
             {
                 keepLeft = false;
             }
-        }
-	}
-}
+        }*/
